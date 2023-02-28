@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 
-const LeagueTable = ( {league, playerNames}) => {
+const LeagueTable = ( {winner, playerNames}) => {
 
-  
- 
+    // const [league, setLeague] = useState({X:0, O:0})
+    let league ={X:0, O:0}
+ if(winner){
+league[winner] += 1
+ }
 
   return (
     <div>

@@ -10,11 +10,16 @@ const Game = () => {
   const [stepNumber, setStepNumber] = useState(0);
   const [xIsNext, setXisNext] = useState(true);
   const [playerNames, setPlayerNames] = useState({ X: "Player 1", O: "Player 2" });
-  const [league, setLeague] = useState({X: 0, O: 0})
+  
+  const initialGameState = {
+    gameHistory: [{ squares: Array(9).fill(null) }],
+    stepNumber: 0,
+    xIsNext: true,
+    playerNames: { X: "Player 1", O: "Player 2" }
+  };
 
   const calculateWinner = (squares) => {
-    const lines = [
-      [0, 1, 2],
+    const lines = [      [0, 1, 2],
       [3, 4, 5],
       [6, 7, 8],
       [0, 3, 6],
@@ -54,6 +59,14 @@ const Game = () => {
     setStepNumber(step);
     setXisNext(step % 2 === 0);
   };
+
+  const resetGame = () => {
+    setGameHistory(initialGameState.gameHistory);
+    setStepNumber(initialGameState.stepNumber);
+    setXisNext(initialGameState.xIsNext);
+    setPlayerNames(initialGameState.playerNames);
+  };
+
   const moves = gameHistory.map((step, move) => {
     const desc = move ?
         'Go to move #' + move :
@@ -63,33 +76,42 @@ const Game = () => {
             <button onClick={() => jumpTo(move)}>{desc}</button>
         </li>
     );
-});
+  });
 
   const current = gameHistory[stepNumber];
   const result = calculateWinner(current.squares);
   const winner = result?.winner;
   const winningSquares = result?.winningSquares;
 
-
-  //uses the index of playernames object to associate with X/O
   let status;
   if (winner) {
     status = `${playerNames[winner]} wins!`;
-    setLeague({[winner]:1})
-
   } else {
     status = `Next player: ${playerNames[xIsNext ? "X" : "O"]}`;
   }
-
+  
   const handleNameChange = (player, name) => {
     setPlayerNames((prevNames) => ({ ...prevNames, [player]: name }));
   };
-
+  
+  const handleNewGame = () => {
+    setGameHistory([{ squares: Array(9).fill(null) }]);
+    setStepNumber(0);
+    setXisNext(true);
+    setPlayerNames({ X: "Player 1", O: "Player 2" });
+  };
+  
   return (
     <div className="game">
+        <div className="left-container">
       <div className="game-board">
-        <Board squares={current.squares} winningSquares={winningSquares} onClick={(i) => handleClick(i)} />
+        <Board
+          squares={current.squares}
+          winningSquares={winningSquares}
+          onClick={(i) => handleClick(i)}
+        />
       </div>
+      <button onClick={handleNewGame}>New game</button></div>
       <div className="game-info">
         <div>{status}</div>
         <div>
@@ -101,24 +123,22 @@ const Game = () => {
             onChange={(e) => handleNameChange("X", e.target.value)}
           />
         </div>
-       
-
-            <div>
-                <label htmlFor="player2">Player 2:</label>
-                <input
-                    id="player2"
-                    type="text"
-                    value={playerNames.O}
-                    onChange={(e) => handleNameChange("O", e.target.value)}
-                />
-            </div>
-                <div>{status}</div>
-                <ol>{moves}</ol>
-            </div>
-            <LeagueTable league={league} playerNames={playerNames}/>
+        <div>
+          <label htmlFor="player2Name">Player 2:</label>
+          <input
+            id="player2Name"
+            type="text"
+            value={playerNames.O}
+            onChange={(e) => handleNameChange("O", e.target.value)}
+          />
         </div>
-    );
+        <div>{status}</div>
+        <ol>{moves}</ol>
+        
+      </div>
+      <LeagueTable winner={winner} playerNames={playerNames} />
+    </div>
+  );
 };
 
 export default Game;
-
