@@ -7,7 +7,7 @@ const LeagueTable = ({ winner, playerNames }) => {
   });
 
 
-  console.log(leagueTable)
+ //add to scoreboard
   useEffect(() => {
     if (winner) {
       const winningPlayer = playerNames[winner];
@@ -17,6 +17,8 @@ const LeagueTable = ({ winner, playerNames }) => {
       }));
     }
   }, [winner, playerNames]);
+
+  //to persist the score data
 
   useEffect(() => {
     localStorage.setItem("leagueTable", JSON.stringify(leagueTable));
