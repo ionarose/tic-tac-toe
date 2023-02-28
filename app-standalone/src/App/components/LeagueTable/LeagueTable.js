@@ -1,18 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-const LeagueTable = ( {winner, playerNames}) => {
+const LeagueTable = ({ winner, playerNames }) => {
+  const [leagueTable, setLeagueTable] = useState({
+    "Player 1": 0,
+    "Player 2": 0,
+  });
 
-    // const [league, setLeague] = useState({X:0, O:0})
-    let league ={X:0, O:0}
- if(winner){
-league[winner] += 1
- }
+
+  console.log(leagueTable)
+  useEffect(() => {
+    if (winner) {
+      const winningPlayer = playerNames[winner];
+      setLeagueTable((prevTable) => ({
+        ...prevTable,
+        [winningPlayer]: prevTable[winningPlayer] + 1,
+      }));
+    }
+  }, [winner, playerNames]);
+
+  useEffect(() => {
+    localStorage.setItem("leagueTable", JSON.stringify(leagueTable));
+  }, [leagueTable]);
+
+  useEffect(() => {
+    const storedTable = JSON.parse(localStorage.getItem("leagueTable"));
+    if (storedTable) {
+      setLeagueTable(storedTable);
+    }
+  }, []);
 
   return (
     <div>
       <h2>League Table</h2>
-      <p>{playerNames.X}</p> <p>{league.X}</p>
-      <p>{playerNames.O}</p><p>{league.O}</p>
+      <p>{playerNames.X}</p> <p>{leagueTable["Player 1"]}</p>
+      <p>{playerNames.O}</p>
+      <p>{leagueTable["Player 2"]}</p>
     </div>
   );
 };

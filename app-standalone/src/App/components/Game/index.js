@@ -11,6 +11,7 @@ const Game = () => {
   const [xIsNext, setXisNext] = useState(true);
   const [playerNames, setPlayerNames] = useState({ X: "Player 1", O: "Player 2" });
   
+  
   const initialGameState = {
     gameHistory: [{ squares: Array(9).fill(null) }],
     stepNumber: 0,
@@ -85,7 +86,9 @@ const Game = () => {
 
   let status;
   if (winner) {
-    status = `${playerNames[winner]} wins!`;
+    const winningPlayer = playerNames[winner];
+    status = `${winningPlayer} wins!`;
+    
   } else {
     status = `Next player: ${playerNames[xIsNext ? "X" : "O"]}`;
   }
