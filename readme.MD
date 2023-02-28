@@ -46,15 +46,35 @@ The directories are:
 
 Please answer the following questions:
     
-1. Comparing the app-original and app-standalone code bases. The app-standalone code base has put each component in a separate file and directory structure.   
-   * Why do you think that was done, what are the advantages / disadvantages?
+1.	Comparing the app-original and app-standalone code bases. The app-standalone code base has put each component in a separate file and directory structure.
+o	Why do you think that was done, what are the advantages / disadvantages?
+Advantages:
+Creating small, reusable components is an essential feature of React and other JS frameworks. It allows reusability and separation of concerns, and quickly shows its worth as codebases get more complex. Both functionality and errors become scoped, so a stray bracket won’t break thousands of lines of code – it will break one component which can easily be isolated and debugged. In this app, they are further separated into their own folders. This can be really useful for keeping everything to do with a component in the same place, like testing and styling files. Using components also helps when working in a large team, as it makes team working much easier and reduces the risk of creating errors which impact other features.
+Disadvantages:
+More code and setup time: setting up each file takes considerably more code than putting everything in one file, and involves a lot of repetition, for example imports.
+More files: can make it harder to manage and maintain. Also can make it harder for someone new coming into the codebase – it can be hard to find where the bit of code is for the thing they want to change. 
+Potential for inconsistent code style: multiple developers working compartmentalised may work to their own style and naturally drift away from agreed upon conventions.
+2.	Thinking about a production ready app, what do you think is missing from all the examples? Hint: the square component in the standalone app has one
+There are no tests for any of the other components.
+3.	Are you familiar with Redux? If so what is the basic idea behind it and what would be a good case for using it?
+I am in the very early stages of learning Redux via building a social media app with a friend (using Redux toolkit). Previously, I have used useReducer(), and for most of the apps I have built so far this was more than adequate. My understanding so far is that Redux is a state management library which can be used to organise state for the whole app in one place - a single JavaScript object, called the "store". This makes it easier to visualise and track data flow through an application, and to implement many features. The store is immutable, and state is updated instead by actions (such as a click) being dispatched to the store, much like with the useReducer hook. 
+Good use cases include:
+•	An app with lots of asynchronous data fetching, loading, and error handling.
+•	An app with lots of complex state which needs to be shared between components. 
+•	An app with a large team of developers working on it, or one for which the development team regularly changes.
 
-2. Thinking about a production ready app, what do you think is missing from all the examples? *Hint: the square component in the standalone app has one*
+4.	If you are interested in the full-stack role Please take a look at the partial implementation of an express routes in backend/router.js.
+o	Thinking of a production application, what issues do you see with this code? List as many as you like
+There are several key issues with this backend, listed roughly in order of severity:
+•	The code does not start the Express server (eg with app.listen()) – it will not listen for requests.
+•	No package.json – the required packages will have to be manually installed by reading through the code.
+•	No error handling for the API routes.
+•	No tests.
+•	Server could be separated into routes and models for scalability and separation of concerns.
+•	Other factors which could be considered are the security risks created by having no route protection or input validation.
+•	The backend also relies on having the database connection string in the environment variables, which has not currently been shared.
 
-3. Are you familiar with Redux? If so what is the basic idea behind it and what would be a good case for using it?
 
-4. *If you are interested in the full-stack role* Please take a look at the partial implementation of an express routes in backend/router.js.
-    * Thinking of a production application, what issues do you see with this code? *List as many as you like* 
 
 ### Coding Challenges
 
