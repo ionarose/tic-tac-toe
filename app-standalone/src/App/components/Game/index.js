@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Board from "../Board";
+import LeagueTable from "../LeagueTable/LeagueTable";
 
 /**
  * A game of tic-tac-toe.
@@ -9,6 +10,7 @@ const Game = () => {
   const [stepNumber, setStepNumber] = useState(0);
   const [xIsNext, setXisNext] = useState(true);
   const [playerNames, setPlayerNames] = useState({ X: "Player 1", O: "Player 2" });
+  const [league, setLeague] = useState({X: 0, O: 0})
 
   const calculateWinner = (squares) => {
     const lines = [
@@ -68,9 +70,13 @@ const Game = () => {
   const winner = result?.winner;
   const winningSquares = result?.winningSquares;
 
+
+  //uses the index of playernames object to associate with X/O
   let status;
   if (winner) {
     status = `${playerNames[winner]} wins!`;
+    setLeague({[winner]:1})
+
   } else {
     status = `Next player: ${playerNames[xIsNext ? "X" : "O"]}`;
   }
@@ -109,6 +115,7 @@ const Game = () => {
                 <div>{status}</div>
                 <ol>{moves}</ol>
             </div>
+            <LeagueTable league={league} playerNames={playerNames}/>
         </div>
     );
 };

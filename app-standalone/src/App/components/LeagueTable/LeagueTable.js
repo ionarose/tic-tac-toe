@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const LeagueTable = (data) => {
+const LeagueTable = ( {league, playerNames}) => {
 
   
  
@@ -8,22 +8,8 @@ const LeagueTable = (data) => {
   return (
     <div>
       <h2>League Table</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Player</th>
-            <th>Wins</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map(([player, wins]) => (
-            <tr key={player}>
-              <td>{player}</td>
-              <td>{wins}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <p>{playerNames.X}</p> <p>{league.X}</p>
+      <p>{playerNames.O}</p><p>{league.O}</p>
     </div>
   );
 };
