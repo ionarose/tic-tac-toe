@@ -13,6 +13,8 @@
     "sinon": "^9.0.2"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.2.7",
     "react-scripts": "3.4.1"
   },
   "scripts": {
